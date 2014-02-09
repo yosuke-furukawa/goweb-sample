@@ -57,9 +57,13 @@ func main() {
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
-	listener, listenErr := net.Listen("tcp", Address)
+  address := ":" + os.Getenv("PORT")
+  if address == ":" {
+    address = Address
+  }
+	listener, listenErr := net.Listen("tcp", address)
 
-	log.Printf("  visit: %s", Address)
+	log.Printf("  visit: %s", address)
 
 	if listenErr != nil {
 		log.Fatalf("Could not listen: %s", listenErr)

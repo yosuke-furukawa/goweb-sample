@@ -40,7 +40,7 @@ func FindTweets(lastId int) (results []Tweet, err error) {
   session := getSession()
   defer session.Close()
   tweets := session.DB("tweets").C("tweets")
-  err = tweets.Find(bson.M{"_id" : bson.M{"$lt" : lastId}}).Limit(10).Sort("-updatedAt").All(&results)
+  err = tweets.Find(bson.M{"_id" : bson.M{"$lt" : lastId}}).Limit(10).Sort("-_id").All(&results)
   return results, err
 }
 
