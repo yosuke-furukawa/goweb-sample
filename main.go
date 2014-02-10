@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./controllers"
+	"github.com/yosuke-furukawa/goweb-sample/controllers"
 	"github.com/stretchr/goweb"
 	"github.com/stretchr/goweb/context"
 	"github.com/stretchr/goweb/responders"

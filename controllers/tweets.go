@@ -5,7 +5,7 @@ import (
   "github.com/stretchr/goweb/context"
   "strconv"
   "net/http"
-  "../models"
+  "github.com/yosuke-furukawa/goweb-sample/models"
 )
 type TweetsController struct {
 }
