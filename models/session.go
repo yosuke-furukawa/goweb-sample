@@ -12,6 +12,8 @@ func getSessionAndDB() (*mgo.Session, *mgo.Database) {
   dburi := "localhost"
   dbname := "tweets"
   if envuri != "" {
+    fmt.Println("ENVURI = ")
+    fmt.Println(envuri)
     uriRegExp := regexp.MustCompile(`(.*)\/(\w+)`)
     connects := uriRegExp.FindStringSubmatch(envuri)
     dburi = connects[1]
