@@ -1,1 +1,1 @@
-web: ./goweb-sample
+web: goweb-sample
