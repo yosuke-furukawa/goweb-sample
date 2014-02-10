@@ -13,9 +13,9 @@ type Tweet struct {
 }
 
 func (t *Tweet) Insert() error {
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  tweets := session.DB("tweets").C("tweets")
+  tweets := db.C("tweets")
   t.Id, _ = Next()
   t.UpdatedAt = int(time.Now().Unix())
   fmt.Println(t.Id)
@@ -25,9 +25,9 @@ func (t *Tweet) Insert() error {
 }
 
 func FindById(id int) (t *Tweet, err error) {
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  tweets := session.DB("tweets").C("tweets")
+  tweets := db.C("tweets")
   t = &Tweet{}
   err = tweets.FindId(id).One(&t)
   return t, err
@@ -37,25 +37,25 @@ func FindTweets(lastId int) (results []Tweet, err error) {
   if lastId == 0 {
     lastId = 1000000
   }
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  tweets := session.DB("tweets").C("tweets")
+  tweets := db.C("tweets")
   err = tweets.Find(bson.M{"_id" : bson.M{"$lt" : lastId}}).Limit(10).Sort("-_id").All(&results)
   return results, err
 }
 
 func DeleteById(id int) error {
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  tweets := session.DB("tweets").C("tweets")
+  tweets := db.C("tweets")
   err := tweets.RemoveId(id)
   return err
 }
 
 func (t *Tweet) Delete() error {
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  tweets := session.DB("tweets").C("tweets")
+  tweets := db.C("tweets")
   err := tweets.RemoveId(t.Id)
   return err
 }

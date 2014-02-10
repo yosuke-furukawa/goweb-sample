@@ -11,9 +11,9 @@ type Counter struct {
 }
 
 func Init() error {
-  session := getSession()
+  session,db := getSessionAndDB()
   defer session.Close()
-  counters := session.DB("tweets").C("counters")
+  counters := db.C("counters")
   c := &Counter{}
   c.Id = "tweet_id"
   c.Seq = 0
@@ -22,9 +22,9 @@ func Init() error {
 }
 
 func Next() (next int, err error) {
-  session := getSession()
+  session, db := getSessionAndDB()
   defer session.Close()
-  counters := session.DB("tweets").C("counters")
+  counters := db.C("counters")
 
   change := mgo.Change{
     Update : bson.M{"$inc" : bson.M{"seq" : 1}},
