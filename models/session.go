@@ -16,13 +16,14 @@ func getSessionAndDB() (*mgo.Session, *mgo.Database) {
     fmt.Println(envuri)
     uriRegExp := regexp.MustCompile(`(.*)\/(\w+)`)
     connects := uriRegExp.FindStringSubmatch(envuri)
-    dburi = connects[1]
+    dburi = connects[0]
     dbname = connects[2]
     fmt.Println(dburi)
     fmt.Println(dbname)
   }
 
   session, err := mgo.Dial(dburi)
+  session.SetSafe(&mgo.Safe{})
   if err != nil {
     panic(err)
   }
