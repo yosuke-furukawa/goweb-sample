@@ -28,3 +28,8 @@ func TestFindAll(t *testing.T) {
   fmt.Println(results)
 }
 
+func TestNotfountTweet(t *testing.T) {
+  results, _ := FindTweets(-1)
+  fmt.Println(results)
+}
+

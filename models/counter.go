@@ -34,3 +34,17 @@ func Next() (next int, err error) {
   _, err = counters.FindId("tweet_id").Apply(change, &c)
   return c.Seq, err
 }
+
+func Prev() (prev int, err error) {
+  session, db := getSessionAndDB()
+  defer session.Close()
+  counters := db.C("counters")
+
+  change := mgo.Change{
+    Update : bson.M{"$inc" : bson.M{"seq" : -1}},
+    ReturnNew : true,
+  }
+  c := &Counter{}
+  _, err = counters.FindId("tweet_id").Apply(change, &c)
+  return c.Seq, err
+}
