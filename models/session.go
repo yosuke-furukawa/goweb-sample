@@ -4,7 +4,6 @@ import (
   "labix.org/v2/mgo"
   "os"
   "regexp"
-  "fmt"
 )
 
 func getSessionAndDB() (*mgo.Session, *mgo.Database) {
@@ -12,14 +11,10 @@ func getSessionAndDB() (*mgo.Session, *mgo.Database) {
   dburi := "localhost"
   dbname := "tweets"
   if envuri != "" {
-    fmt.Println("ENVURI = ")
-    fmt.Println(envuri)
     uriRegExp := regexp.MustCompile(`(.*)\/(\w+)`)
     connects := uriRegExp.FindStringSubmatch(envuri)
     dburi = connects[0]
     dbname = connects[2]
-    fmt.Println(dburi)
-    fmt.Println(dbname)
   }
 
   session, err := mgo.Dial(dburi)
